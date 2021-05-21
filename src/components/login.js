@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Error } from "./error";
 import { Link } from "react-router-dom";
 
-export const Login = ({ setLocalStroage, sendReq }) => {
+export const Login = ({ setLocalStroage, sendReq, setLoggedIn }) => {
   const [form, setForm] = useForm({
     username: "",
     password: "",
@@ -21,9 +21,13 @@ export const Login = ({ setLocalStroage, sendReq }) => {
       window.location.replace("/");
     } else {
       setInvalid(true);
-      setTimeout(setInvalid(false), 2);
+      setTimeout(() => setInvalid(false), 3000);
     }
   };
+
+  useEffect(() => {
+    console.log(invalid);
+  }, [invalid]);
 
   return (
     <>

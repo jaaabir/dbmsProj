@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Error } from "./error";
 import { Link } from "react-router-dom";
 
-export const Signup = ({ setLocalStroage, sendReq }) => {
+export const Signup = ({ setLocalStroage, sendReq, setLoggedIn }) => {
   const [form, setForm] = useForm({
     username: "",
     password: "",
@@ -28,6 +28,7 @@ export const Signup = ({ setLocalStroage, sendReq }) => {
         const res = await response.json();
         setLocalStroage("jtoken", res.token);
         setLocalStroage("jusername", res.username);
+        setLoggedIn(true);
         window.location.replace("/");
       } else {
         setInvalid(true);
