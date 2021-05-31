@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Navbar } from "./navbar";
 import { FeedCard } from "./feedCard";
 import { makeStyles } from "@material-ui/core/styles";
+import { CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   allFeeds: {
@@ -46,13 +47,16 @@ export const Feeds = ({ getLocalStorage, sendReq, loggedIn, setLoggedIn }) => {
         sendReq={sendReq}
       />
       <div className={classes.allFeeds}>
-        {feeds
-          ? feeds.map((feed, ind) => (
-              <div key={ind} style={{ marginTop: "20px" }}>
-                <FeedCard form={feed} />
-              </div>
-            ))
-          : null}
+        {feeds ? (
+          feeds.map((feed, ind) => (
+            <div key={ind} style={{ marginTop: "20px" }}>
+              <FeedCard form={feed} />
+            </div>
+          ))
+        ) : (
+          // <CircularProgress />
+          <h3>hmmm looks like there's no feeds</h3>
+        )}
       </div>
     </>
   );

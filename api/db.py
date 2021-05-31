@@ -14,9 +14,9 @@ def get_login_details(username):
         details = users.find_one({'username' : username})
         print(details)
         if details:
-            return details['username'], details['password']
+            return details
 
-    return None, None
+    return None
 
 
 def store_user_details(name, username, password, age, gender):

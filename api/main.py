@@ -58,9 +58,8 @@ def login():
     print(request.json)
     uname = request.json['username']
     upass = request.json['password']
-    dbuname, dbupass = get_login_details(uname)
-
-    # dbuname, dbupass = details['username'], details['password']
+    details = get_login_details(uname)
+    dbuname, dbupass = details['username'], details['password']
     if not dbuname:
         return make_response(f"{dbuname} is not found", 403, {"WWW-Authenticate" : "Basic realm : 'login menu'"})
 
