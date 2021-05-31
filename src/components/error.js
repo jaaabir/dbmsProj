@@ -1,53 +1,47 @@
-import { useState } from "react";
-import Typography from "@material-ui/core/typography";
+import React, { useState, useEffect } from "react";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap",
-    "& > *": {
-      margin: theme.spacing(1),
-      width: theme.spacing(50),
-      height: theme.spacing(8),
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
     },
-  },
-
-  top: {
-    position: "absolute",
-    right: "50%",
-    top: "5",
-  },
-  center: {
-    margin: "auto",
-  },
-  color: {
-    margin: "auto",
-    backgroundColor: "#ff3333",
-    textAlign: "center",
   },
 }));
 
-export const Error = ({ msg }) => {
+export const Error = ({ type, msg }) => {
   const classes = useStyles();
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    // setOpen(true);
+
+    return () => {
+      setOpen(false);
+    };
+  }, []);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
-    // <div className={classes.top}>
-    //   <h3>{msg}</h3>
-    // </div>
-
-    <div
-      style={{
-        // margin: "auto",
-        width: `250px`,
-        position: "absolute",
-        left: "50%",
-      }}
-    >
-      <Paper elevation={3} className={classes.color}>
-        <h3>{msg}</h3>
-      </Paper>
+    <div className={classes.root}>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert severity={type}>{msg}</Alert>
+      </Snackbar>
     </div>
   );
 };

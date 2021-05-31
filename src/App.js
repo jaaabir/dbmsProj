@@ -9,7 +9,7 @@ function App() {
   const getLocalStorage = (key) => window.localStorage.getItem(key);
   const setLocalStroage = (key, value) =>
     window.localStorage.setItem(key, value);
-
+  const [first, setFirst] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const sendReq = async (endpoint, data, method = "post") => {
     const baseURL = "http://localhost:5000";
@@ -62,6 +62,8 @@ function App() {
             sendReq={sendReq}
             loggedIn={loggedIn}
             setLoggedIn={handleLoggedIn}
+            first={first}
+            setFirst={setFirst}
           />
         </Route>
         <Route path="/login">

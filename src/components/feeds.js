@@ -3,6 +3,7 @@ import { Navbar } from "./navbar";
 import { FeedCard } from "./feedCard";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress } from "@material-ui/core";
+import { Error } from "./error";
 
 const useStyles = makeStyles((theme) => ({
   allFeeds: {
@@ -13,7 +14,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Feeds = ({ getLocalStorage, sendReq, loggedIn, setLoggedIn }) => {
+export const Feeds = ({
+  getLocalStorage,
+  sendReq,
+  loggedIn,
+  setLoggedIn,
+  setFirst,
+  first,
+}) => {
   const classes = useStyles();
   const [feeds, setFeeds] = useState([]);
   const getFeeds = async () => {
@@ -29,10 +37,12 @@ export const Feeds = ({ getLocalStorage, sendReq, loggedIn, setLoggedIn }) => {
       setFeeds(res.feeds);
     } else window.location.replace("/login");
   };
+
+  console.log("opened first time : " + first);
   useEffect(() => {
     getFeeds();
     setLoggedIn(true);
-
+    setFirst(false);
     // return () => {
     //   setFeeds({});
     // };
@@ -46,6 +56,9 @@ export const Feeds = ({ getLocalStorage, sendReq, loggedIn, setLoggedIn }) => {
         setLoggedIn={setLoggedIn}
         sendReq={sendReq}
       />
+      {first ? (
+        <Error type="info" msg={`Welcome ${getLocalStorage("jusername")}`} />
+      ) : null}
       <div className={classes.allFeeds}>
         {feeds ? (
           feeds.map((feed, ind) => (
